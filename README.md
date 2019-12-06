@@ -41,6 +41,8 @@ boo -h
 
 ## Configuration
 
+Note: Updated to accept Java system property option `-DONEOPS_CONFIG` with command `java -jar boo` to give a custome boo config file instead of `~/.boo/config`
+
 Boo YAML templates are processed with [Mustache][1] to allow variable interpolation when the standard `~/.boo/config` file
 contains a `default` profile. If you have a `default` profile that looks like the following:
 

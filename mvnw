@@ -24,6 +24,7 @@
 # Required ENV vars:
 # ------------------
 #   JAVA_HOME - location of a JDK home dir
+export JAVA_HOME="/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home"
 #
 # Optional ENV vars
 # -----------------
