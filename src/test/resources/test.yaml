@@ -1,11 +1,11 @@
 ---
 # Create a sample tomcat
 
-boo:
-  oneops_host: '{{host}}'
-  organization: '{{organization}}' # OneOps org name
-  api_key: '{{api_key}}' # Copy from OneOps UI->profile->authentication->API Token
-  email: '{{email}}'
+boo: # Ideally this should come from the boo config file (~/.boo/config)
+  oneops_host: 'https://localhost:9090'
+  organization: 'oneops_org_name' # OneOps org name
+  api_key: 'oneops_api_key' # Copy from OneOps UI->profile->authentication->API Token
+  email: 'me@email.com'
   environment_name: 'dev' # All the deployment in this template adds to this environment.
   ip_output: 'json'
 
@@ -61,7 +61,6 @@ platforms: # In OneOps design.
         enable_method_connect: 'false'
         autodeploy_enabled: 'true'
         tlsv1_protocol_enabled: 'false'
-        mirrors: '["http://gec-maven-nexus.walmart.com/nexus/content/repositories/apache-dist/"]'
         version: '7.0'
         build_version: '75'
       java:
@@ -103,7 +102,7 @@ environment: # Only support one environment for now.
         lb:
           ecv_map: '{"8080":"GET /"}'
   clouds:
-    {{cloud}}:
+    cloud_name_in_oneops: # Ideally this should come from the boo config file (~/.boo/config)
       priority: '1'
       dpmt_order: '1'
       pct_scale: '100'

@@ -1,4 +1,4 @@
-# Boo
+# Boo  [![Maven Central][maven-svg]][maven-url]
 
 The purpose of Boo is to provide a simple command-line tool for the OneOps developers and OneOps users to deploy,
 update, destroy and operate their OneOps assemblies.
@@ -9,17 +9,22 @@ OneOps pack by attemping to instantiate the updated pack and executing tests on 
 OneOps user, it provides an command-line tool to deploy, update, destroy and operator their OneOps assemblies. The boo
 tool is an addition to the OneOps UI interfaces.
 
+It requires a [YAML](http://yaml.org/) configuration file and uses the OneOps client API to primarily interact with OneOps via `https:443`.
+
+## Prerequisite
+
+- [OneOps](http://oneops.com/user/).
+- Cloud computing fundamentals.
+
 ## Usage
 
 To use Boo you download the executable JAR and place it in your `$PATH`. Use the latest version available from
 [http://repo1.maven.org/maven2/com/oneops/boo/boo](http://repo1.maven.org/maven2/com/oneops/boo/boo) e.g.:
 
 ```
-curl -o boo http://repo1.maven.org/maven2/com/oneops/boo/boo/1.0.18/boo-1.0.18-executable.jar
-
-chmod +x boo
-
-boo <options>
+$ curl -o boo http://repo1.maven.org/maven2/com/oneops/boo/boo/1.0.19/boo-1.0.19-executable.jar
+$ chmod +x boo
+$ boo <options>
 ```
 
 For debug use:
@@ -166,6 +171,87 @@ user=bob
 
 The blank lines are inserted so that when the YAML is processed, the resulting string will contain the line breaks.
 
+# Sample Boo Operations
+
+- **Create an assembly, environment and deploy your instance to OneOps.**
+
+     `boo -f boo.yml -create`
+     
+         Creating the environment DEV.
+          32% **************** 
+         
+          42% ********************* 
+         
+          52% ************************** 
+         
+         Updating the compute size in DEV - empty-vm
+          72% ************************************ 
+         
+         Starting the deployment now.
+         100% ************************************************** 
+     
+-  **Check the status of your deployment**
+
+    `boo -f boo.yml -status`
+    
+    ``DEV deployment status:active``
+    
+- **Update a configuration and deploy your changes to OneOps**  
+
+  `boo -f boo.yml -update`      
+                              
+          Updating component daemon for empty-vm ...
+          Updating component lb for empty-vm ...
+          Updating component secgroup for empty-vm ...
+          Updating component os for empty-vm ...
+          Updating component java for empty-vm ...
+          Updating component user-test for empty-vm ...
+           15% ******* 
+          
+           20% ********** 
+          
+          Environment exist, skip create environment DEV.
+           32% **************** 
+          
+           42% ********************* 
+          
+           52% ************************** 
+  
+          Starting the deployment now.
+          100% ************************************************** 
+ 
+- **Delete an assembly & platform**
+
+  First `-remove` destroys the resource. Second `-remove` destroys the orphaned assembly. 
+    
+    One can use `-force` to destroy all at once without the `y/n` prompt.
+
+    `boo -f boo.yml -remove`
+    
+        WARNING! There are 1 assemblies using the my-first-assembly-dev configuration. Do you want to destroy all of them? (y/n)
+         y
+         Destroying OneOps assembly my-first-assembly-dev 
+         
+         A deployment has been started to remove active nodes. Please execute this command again once the deployment is complete to finish deleting remaining elements.
+
+- **Update a configuration and do not deploy it to OneOps**
+
+    `boo -f boo.yml -update --no-deploy`
+    
+       Environment exist, skip create environment DEV.
+       32% **************** 
+      
+       42% ********************* 
+      
+       52% ************************** 
+      
+      Updating the compute size in DEV - empty-vm
+       72% ************************************ 
+      
+      100% ************************************************** 
+      
+      Created/updated assembly without deployments.
+
 # Development
 
 ## Build the source code to an executable command:
@@ -240,4 +326,10 @@ Boo uses the Google code style. The formatter for Eclipse you can find here:
 https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml
 
 
+-----------------
+ <sup><b>**</b></sup>Require [Java 8 or later][java-download]
+ 
+ <!-- Badges -->
+[maven-url]: http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22com.oneops.boo%22%20AND%20a%3A%22boo%22
+[maven-svg]: https://img.shields.io/maven-central/v/com.oneops.boo/boo.svg?label=Maven%20Central&style=flat-square
 [1]: https://github.com/spullara/mustache.java

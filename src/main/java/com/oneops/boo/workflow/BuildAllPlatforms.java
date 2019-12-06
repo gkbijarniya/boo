@@ -533,10 +533,15 @@ public class BuildAllPlatforms extends AbstractWorkflow {
       // Ignore
       isExist = Boolean.FALSE;
     }
+    Map<String, String> cloneAttr = new HashMap<>();
+    if(attributes != null)
+    for(Entry<String, String> entry : attributes.entrySet()) {
+    	  cloneAttr.put(entry.getKey(), String.valueOf(entry.getValue()));
+    }
     if (isExist) {
-      design.updatePlatformComponent(platformName, uniqueName, attributes);
+      design.updatePlatformComponent(platformName, uniqueName, cloneAttr);
     } else {
-      design.addPlatformComponent(platformName, componentName, uniqueName, attributes);
+      design.addPlatformComponent(platformName, componentName, uniqueName, cloneAttr);
     }
     // design.commitDesign();
     return true;
